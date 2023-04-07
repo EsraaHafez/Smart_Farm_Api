@@ -49,11 +49,17 @@ return [
  */
 
 
-        'api' => [
+          'api' => [
             'driver' => 'passport',
             'provider' => 'users',
             'hash' => false,
         ],
+
+      /*   'api' => [
+            'driver' => 'jwt',
+            'provider' => 'users',
+            'hash' => false,
+        ], */
     ],
 
     /*

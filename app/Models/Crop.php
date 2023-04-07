@@ -9,7 +9,8 @@ class Crop extends Model
 {
     use HasFactory;
 
-
+    protected $table = 'crops';
+    protected $primaryKey = 'Crops_Name';
 
     protected $fillable = [
         'Crops_Name',
@@ -18,6 +19,7 @@ class Crop extends Model
         'Fertilisers',
         'Price',
         'Type',
+        'Image',
         'Field_id',
         'Disease_id',
 

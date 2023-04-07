@@ -23,6 +23,7 @@ class Crop extends JsonResource
             'Fertilisers' => $this->Fertilisers,
             'Price' => $this->Price,
             'Type'=> $this->Type,
+            'Image'=> $this->Image,
             'Field_id' => $this->Field_id,
             'Disease_id' => $this->Disease_id,
 
