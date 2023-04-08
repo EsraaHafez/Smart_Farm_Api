@@ -6,13 +6,13 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-// use Tymon\JWTAuth\Contracts\JWTSubject;
+ use Tymon\JWTAuth\Contracts\JWTSubject;
 // use Laravel\Sanctum\HasApiTokens;
 use Laravel\Passport\HasApiTokens;
 use Hash;
-// class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable implements JWTSubject
 
-class User extends Authenticatable
+//class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -47,7 +47,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
- /*
+
     public function getJWTIdentifier()
     {
         return $this->getKey();
@@ -56,6 +56,6 @@ class User extends Authenticatable
     public function getJWTCustomClaims()
     {
         return [];
-    } */
+    }
 
 }
