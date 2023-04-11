@@ -66,8 +66,8 @@ class Kernel extends HttpKernel
         //'checkPassword' => \App\Http\Middleware\CheckPassword::class,
 /*         'jwt.authenticate' => 'Tymon\JWTAuth\Middleware\GetUserFromToken',
         'jwt.refresh' => 'TymonJWTAuth\Middleware\RefreshToken', */
-        'jwt.auth' => 'Tymon\JWTAuth\Middleware\GetUserFromToken',
-        'jwt.refresh' => 'TymonJWTAuth\Middleware\RefreshToken'
+      /*   'jwt.auth' => 'Tymon\JWTAuth\Middleware\GetUserFromToken',
+        'jwt.refresh' => 'TymonJWTAuth\Middleware\RefreshToken' */
 
     ];
 }

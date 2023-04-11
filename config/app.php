@@ -175,8 +175,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         //'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
-         'Tymon\JWTAuth\Providers\LaravelServiceProvider',
-         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+        // 'Tymon\JWTAuth\Providers\LaravelServiceProvider',
+
         //'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
     ],
 
@@ -236,8 +236,8 @@ return [
         // 'JWTFactory' => 'Tymon\JWTAuth\Facades\JWTFactory',
 /*         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class, */
-        'JWTAuth'   => 'Tymon\JWTAuth\Facades\JWTAuth',
-        'JWTFactory' => 'Tymon\JWTAuth\Facades\JWTFactory'
+        //'JWTAuth'   => 'Tymon\JWTAuth\Facades\JWTAuth',
+        //'JWTFactory' => 'Tymon\JWTAuth\Facades\JWTFactory'
     ],
 
 ];

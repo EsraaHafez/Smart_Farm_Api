@@ -23,12 +23,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('register', 'Api\AuthController@register');
 Route::post('login', 'Api\AuthController@Login');
 
-
+/*
 Route::middleware('jwt.auth')->get('/users',function (Request $request) {
     return auth()->user();
+}); */
+
+Route::middleware('auth:api')->get('/users',function (Request $request) {
+    return auth()->user();
+    return Passport::tokensExpireIn(Carbon::now()->addDays(15));
 });
-
-
 
 //all routes /api here must be api authenticated .
 
@@ -76,5 +79,34 @@ Route::middleware('jwt.auth')->get('/users',function (Request $request) {
     Route::resource('CartStorge', 'Api\CartStorgeController');
     Route::get('CartStorge/Cart/{id}', 'Api\CartStorgeController@Cart');
     Route::get('CartStorge/Storge/{id}', 'Api\CartStorgeController@Storge');
+
+    Route::resource('Order', 'Api\OrderController');
+    Route::get('Order/user/{id}', 'Api\OrderController@user');
+    Route::get('Order/Cart/{id}', 'Api\OrderController@Cart');
+
+
+    Route::resource('HarvestCart', 'Api\HarvestCartController');
+    Route::get('HarvestCart/Harvest/{id}', 'Api\HarvestCartController@Harvest');
+    Route::get('HarvestCart/Cart/{id}', 'Api\HarvestCartController@Cart');
+
+    Route::resource('CropsDisease', 'Api\CropsDiseaseController');
+    Route::get('CropsDisease/Crops/{Crops_Name}', 'Api\CropsDiseaseController@Crops');
+
+    Route::resource('Farmers_Phone', 'Api\FarmersPhoneController');
+    Route::get('Farmers_Phone/Farmer/{id}', 'Api\FarmersPhoneController@Farmer');
+
+    Route::resource('Reasons_Disease', 'Api\ReasonsDiseaseController');
+    Route::get('Reasons_Disease/Disease/{id}', 'Api\ReasonsDiseaseController@Disease');
+
+    Route::resource('Actors_Phone', 'Api\ActorsPhoneController');
+    Route::get('Actors_Phone/Actor/{Name}', 'Api\ActorsPhoneController@Actor');
+
+
+    Route::resource('Users_Phone', 'Api\UsersPhoneController');
+    Route::delete('Users_Phone/delete/{phone}', 'Api\UsersPhoneController@delete');
+    Route::get('Users_Phone/user', 'Api\UsersPhoneController@user');
+
+
+
 
  });

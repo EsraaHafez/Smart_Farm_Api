@@ -18,16 +18,16 @@ class CartStorgeController extends Basecontroller
 
     }
 
-    public function Cart($Field_id)
+    public function Cart($Cart_id)
     {
-        $CartStorge = CartStorge::where('Field_id' , $Field_id)->get();
+        $CartStorge = CartStorge::where('Cart_id' , $Cart_id)->get();
         return $this->sendResponse(CartStorgeResource::collection($CartStorge) , 'All CartStorge sent');
 
     }
 
-    public function Storge($Farmer_id)
+    public function Storge($Storge_id)
     {
-        $CartStorge = CartStorge::where('Farmer_id' , $Farmer_id)->get();
+        $CartStorge = CartStorge::where('Storge_id' , $Storge_id)->get();
         return $this->sendResponse(CartStorgeResource::collection($CartStorge) , 'All CartStorge sent');
 
     }
@@ -38,8 +38,8 @@ class CartStorgeController extends Basecontroller
         $input = $request->all() ;
         $validator = Validator::make($input , [
             'id'   => 'required',
-            'Field_id'   => 'required',
-            'Farmer_id'   => 'required',
+            'Cart_id'   => 'required',
+            'Storge_id'   => 'required',
 
 
         ]) ;
@@ -61,7 +61,7 @@ class CartStorgeController extends Basecontroller
         $CartStorge = CartStorge::find($id);
         if(is_null($CartStorge)){
 
-            return $this->sendError('Farmer Not Found');
+            return $this->sendError('CartStorge Not Found');
 
         }
         return $this->sendResponse(new CartStorgeResource($CartStorge), 'CartStorge Found  successfully');
@@ -74,8 +74,8 @@ class CartStorgeController extends Basecontroller
         $input = $request->all() ;
         $validator = Validator::make($input , [
             'id'   => 'required',
-            'Field_id'   => 'required',
-            'Farmer_id'   => 'required',
+            'Cart_id'   => 'required',
+            'Storge_id'   => 'required',
 
 
         ]) ;
@@ -95,8 +95,8 @@ class CartStorgeController extends Basecontroller
          // first Crops_Name from database and second from user.
          $CartStorge->id = $input['id'];
 
-        $CartStorge->Field_id = $input['Field_id'];
-        $CartStorge->Farmer_id = $input['Farmer_id'];
+        $CartStorge->Cart_id = $input['Cart_id'];
+        $CartStorge->Storge_id = $input['Storge_id'];
 
 
 
@@ -107,7 +107,7 @@ class CartStorgeController extends Basecontroller
     }
 
 
-    public function destroy(CartStorge $Farmersoffield)
+    public function destroy(CartStorge $CartStorge)
     {
       /*       $errorMessage = [] ;
 
@@ -116,8 +116,8 @@ class CartStorgeController extends Basecontroller
             return $this->sendError('you dont have rights' , $errorMessage);
 
         } */
-        $Farmersoffield->delete();
-        return $this->sendResponse(new CartStorgeResource($Farmersoffield), 'CartStorge deleted  successfully');
+        $CartStorge->delete();
+        return $this->sendResponse(new CartStorgeResource($CartStorge), 'CartStorge deleted  successfully');
 
     }
 }
