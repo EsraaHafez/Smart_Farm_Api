@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Auth;
+
 class Users_Phone extends JsonResource
 {
     /**
@@ -17,9 +18,8 @@ class Users_Phone extends JsonResource
         //return parent::toArray($request);
         return [
 
-
             'user_'.'id' => Auth::User()->id  ,
-            'Phone' => $this->Phone
+            'Phone' => $Users_Phone->Phone
 
 
 

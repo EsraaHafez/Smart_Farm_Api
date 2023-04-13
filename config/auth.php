@@ -55,6 +55,12 @@ return [
             'hash' => false,
         ],
 
+        'Actor' => [
+            'driver' => 'passport',
+            'provider' => 'actors',
+            'hash' => false,
+        ],
+
  /*            'api' => [
                'driver' => 'jwt',
                'provider' => 'users',
@@ -84,6 +90,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
+        'actors' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Actor::class,
+        ],
 
         // 'users' => [
         //     'driver' => 'database',
@@ -109,6 +119,12 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'actors' => [
+            'provider' => 'actors',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,

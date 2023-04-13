@@ -103,10 +103,13 @@ Route::middleware('auth:api')->get('/users',function (Request $request) {
 
 
     Route::resource('Users_Phone', 'Api\UsersPhoneController');
-    Route::delete('Users_Phone/delete/{phone}', 'Api\UsersPhoneController@delete');
-    Route::get('Users_Phone/user', 'Api\UsersPhoneController@user');
+     Route::get('Users_Phone/user', 'Api\UsersPhoneController@user');
 
 
 
 
  });
+
+ Route::post('actors/register', 'Api\ActorController@register');
+ Route::post('actors/login', 'Api\ActorController@login');
+

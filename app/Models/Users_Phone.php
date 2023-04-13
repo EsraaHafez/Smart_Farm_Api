@@ -10,7 +10,7 @@ class Users_Phone extends Model
     use HasFactory;
     protected $table = 'phone_users';
     public $incrementing = false;
-    protected $primarykey = [ 'Phone'];
+    protected $primarykey = [ 'id', 'Phone'];
 
 
 

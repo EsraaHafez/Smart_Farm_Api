@@ -92,9 +92,9 @@ class UsersPhoneController extends Basecontroller
          return $this->sendResponse(new Users_PhoneResource($Phone), 'Users_Phone update  successfully');
 
     }
-/*
 
-    public function destroy($Phone )
+
+    public function destroy( Users_Phone $Phone)
     {
       /*       $errorMessage = [] ;
 
@@ -103,25 +103,9 @@ class UsersPhoneController extends Basecontroller
             return $this->sendError('you dont have rights' , $errorMessage);
 
         } */
-     /*    $Phone->delete()->where('id',Auth::id());
 
-        return $this->sendResponse(new Users_PhoneResource($Phone), 'Users_Phone deleted  successfully');
- */
-   // }
-
-     function delete($Phone)
-    {
-
-        $user_phone = Users_Phone::find($Phone) ;
-        $result=$user_phone->delete()->where('id',Auth::id());
-        if($result){
-        return ["result"=>"record has been delete " . $Phone];
-        }
-        else{
-            return ["result"=>"record has not been delete " . $Phone];
-        }
-       // return $this->sendResponse(new Users_PhoneResource($Phone), 'Users_Phone deleted  successfully');
+        $Phone->delete($Phone);
+        return $this->sendResponse(new Users_PhoneResource($Phone, 'Phone'), 'Users_Phones deleted  successfully');
 
     }
-
 }

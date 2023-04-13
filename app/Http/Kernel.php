@@ -37,7 +37,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        ],
+         ],
 
         'api' => [
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
@@ -63,7 +63,9 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        //'checkPassword' => \App\Http\Middleware\CheckPassword::class,
+        'scopes' => \Laravel\Passport\Http\Middleware\CheckScopes::class,
+        'scope' => \Laravel\Passport\Http\Middleware\CheckForAnyScope::class,
+         //'checkPassword' => \App\Http\Middleware\CheckPassword::class,
 /*         'jwt.authenticate' => 'Tymon\JWTAuth\Middleware\GetUserFromToken',
         'jwt.refresh' => 'TymonJWTAuth\Middleware\RefreshToken', */
       /*   'jwt.auth' => 'Tymon\JWTAuth\Middleware\GetUserFromToken',
