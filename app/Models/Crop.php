@@ -11,6 +11,7 @@ class Crop extends Model
 
     protected $table = 'crops';
     protected $primaryKey = 'Crops_Name';
+    public $incrementing = false;
 
     protected $fillable = [
         'Crops_Name',

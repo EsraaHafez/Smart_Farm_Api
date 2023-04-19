@@ -37,13 +37,28 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+
          ],
 
         'api' => [
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+
         ],
+
+        'Actortapi' => [
+            // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+         /*    \App\Http\Middleware\CheckActoreToken::class,
+            \App\Http\Middleware\EncryptCookies::class,
+            \Illuminate\Session\Middleware\StartSession::class, */
+            'throttle:api',
+            'throttle:Actortapi',
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+
+        ],
+
+
     ];
 
     /**
@@ -65,6 +80,10 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'scopes' => \Laravel\Passport\Http\Middleware\CheckScopes::class,
         'scope' => \Laravel\Passport\Http\Middleware\CheckForAnyScope::class,
+        'checkActoreToken' => \App\Http\Middleware\CheckActoreToken::class,
+
+
+
          //'checkPassword' => \App\Http\Middleware\CheckPassword::class,
 /*         'jwt.authenticate' => 'Tymon\JWTAuth\Middleware\GetUserFromToken',
         'jwt.refresh' => 'TymonJWTAuth\Middleware\RefreshToken', */

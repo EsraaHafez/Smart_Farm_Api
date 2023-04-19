@@ -4,8 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Auth;
-
-class Users_Phone extends JsonResource
+class User_Phone extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -20,7 +19,7 @@ class Users_Phone extends JsonResource
 
             'user_'.'id' => Auth::User()->id  ,
             //'user_'.'id' => $this->id,
-           // 'Phone' => $this->Phone
+            'Phone' => $this->Phone
 
 
 

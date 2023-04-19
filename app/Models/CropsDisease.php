@@ -9,7 +9,7 @@ class CropsDisease extends Model
 {
     use HasFactory;
     protected $table = 'crops_disease';
-
+    public $incrementing = false;
 
      protected $fillable = [
          'id' ,

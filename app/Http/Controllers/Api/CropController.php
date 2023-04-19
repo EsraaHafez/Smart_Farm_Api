@@ -33,24 +33,29 @@ class CropController extends Basecontroller
 
     public function store(Request $request)
     {
-        $input = $request->all() ;
-        $validator = Validator::make($input , [
+         $Crops = new Crop();
+         $input = $request->all() ;
+         $validator = Validator::make($input , [
             'Crops_Name'=> 'required',
             'Life_Cycle'=>'required',
             'Temp'=>'required' ,
             'Fertilisers'=> 'required',
             'Price'=>'required',
             'Type'=>'required' ,
+            'Image'  =>'required|max:1024' ,
             'Field_id'=>'required',
             'Disease_id'=>'required'
 
         ]) ;
+
+
 
         if($validator->fails()){
 
             return $this->sendError('please validate error' , $validator->errors());
 
         }
+
 
           $Crop = Crop::create($input);
          return $this->sendResponse(new CropResource($Crop), 'Crop create  successfully');
@@ -71,7 +76,7 @@ class CropController extends Basecontroller
 
 
 
-    public function update(Request $request, Crop $crop)
+    public function update(Request $request, Crop $Crop)
     {
         $input = $request->all() ;
         $validator = Validator::make($input , [
@@ -81,6 +86,7 @@ class CropController extends Basecontroller
             'Fertilisers' => 'required',
             'Price' =>'required',
             'Type' =>'required' ,
+            'Image' =>'required' ,
             'Field_id' =>'required',
             'Disease_id' =>'required'
 
@@ -105,10 +111,11 @@ class CropController extends Basecontroller
           $Crop->Fertilisers = $input['Fertilisers'];
           $Crop->Price = $input['Price'];
           $Crop->Type = $input['Type'];
+          $Crop->Image = $input['Image'];
           $Crop->Field_id = $input['Field_id'];
           $Crop->Disease_id = $input['Disease_id'];
 
-          $crop->save();
+          $Crop->save();
          return $this->sendResponse(new CropResource($Crop), 'Crop update  successfully');
 
     }

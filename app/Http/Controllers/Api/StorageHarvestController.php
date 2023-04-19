@@ -61,7 +61,7 @@ class StorageHarvestController extends Basecontroller
         $StorageHarvest = StorageHarvest::find($id);
         if(is_null($StorageHarvest)){
 
-            return $this->sendError('Disease Not Found');
+            return $this->sendError('StorageHarvest Not Found');
 
         }
         return $this->sendResponse(new StorageHarvestResource($StorageHarvest), 'StorageHarvest Found  successfully');
@@ -73,7 +73,7 @@ class StorageHarvestController extends Basecontroller
      {
         $input = $request->all() ;
         $validator = Validator::make($input , [
-            'id'   => 'required',
+            //'id'   => 'required',
             'Harvest_id'   => 'required',
             'Storge_id'   => 'required',
 

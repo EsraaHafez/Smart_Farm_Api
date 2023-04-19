@@ -13,7 +13,7 @@ class Order extends Model
 
 
     protected $fillable = [
-        'Date',
+        //'Date',
         'Quantity',
         'Total_Price',
         'id',

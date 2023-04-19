@@ -9,15 +9,22 @@ class StorageofClient extends Model
 {
     use HasFactory;
     protected $table = 'buys';
-    //protected $primaryKey = 'Client_id';
+    //protected $primaryKey = Null;
+    // protected $primaryKey = array('id', 'Storge_id');
+    protected $primarykey = [ 'id', 'Storge_id'];
 
+
+     public $incrementing = false;
 
      protected $fillable = [
-        'Buys_id',
+        //'Buys_id',
          'id',
          'Storge_id'
 
 
 
      ];
+
+
+
 }

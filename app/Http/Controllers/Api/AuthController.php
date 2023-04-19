@@ -61,6 +61,24 @@ class AuthController extends Basecontroller
 
 
 
+        public function logout ()
+    {
+        $tokenRepository = app('Laravel\Passport\TokenRepository');
+
+        $user = auth('api')->user();
+
+        if ($user) {
+            $tokenRepository->revokeAccessToken($user->token()->id);
+            return 'logged out';
+        } else {
+            return 'already logged out';
+        }
+    }
+
+
+
+
+
 
 
 }

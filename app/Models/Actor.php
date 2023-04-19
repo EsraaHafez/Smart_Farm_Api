@@ -1,25 +1,33 @@
 <?php
 
+
 namespace App\Models;
 
-
-use Illuminate\Foundation\auth\User as Authenticatable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\auth\User as CheckActoreToken;
 use Illuminate\Notifications\Notifiable;
+ //use Tymon\JWTAuth\Contracts\JWTSubject;
+// use Laravel\Sanctum\HasApiTokens;
 use Laravel\Passport\HasApiTokens;
 use Hash;
 
-
-class Actor extends Authenticatable
+class Actor extends CheckActoreToken
 {
-    use HasApiTokens, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
-    protected $guard = 'Actor';
+    protected $guarded = [];
+    //protected $guarded = array();
+    //protected $guard = 'Actor';
     protected $table = 'actor';
+    //public $incrementing = false;
+    protected $primaryKey = 'Actor_Name';
+
 
     protected $fillable = [
         'Actor_Name',
         'email',
-        'Password',
+        'Password'
 
     ];
 

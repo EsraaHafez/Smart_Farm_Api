@@ -9,7 +9,7 @@ class Farmers_Phone extends Model
 {
     use HasFactory;
     protected $table = 'mobile';
-
+    public $incrementing = false;
 
     protected $fillable = [
         'id' ,

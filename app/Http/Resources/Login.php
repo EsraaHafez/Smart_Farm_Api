@@ -3,9 +3,9 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
-class Users_Phone extends JsonResource
+class Login extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,13 +18,18 @@ class Users_Phone extends JsonResource
         //return parent::toArray($request);
         return [
 
-            'user_'.'id' => Auth::User()->id  ,
-            //'user_'.'id' => $this->id,
-           // 'Phone' => $this->Phone
-
+            'Login_id' => $this->Login_id   ,
+            'Name' => $this->Name,
+            'Password' => $this->Password ,
+            //'Actor_Name' => $this->Actor_Name ,
+            'id' => Auth::User()->id   ,
 
 
 
         ];
+
+
+
+
     }
 }

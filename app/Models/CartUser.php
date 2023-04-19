@@ -5,17 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class StorageHarvest extends Model
+class CartUser extends Model
 {
     use HasFactory;
-    protected $table = 'contain';
-    public $incrementing = false;
+
+    protected $table = 'cart';
+    protected $primaryKey = 'Cart_id';
 
 
     protected $fillable = [
+        'Name',
+        'Quantity',
+        'Image',
+        'Price',
         'id',
-        'Harvest_id',
-        'Storge_id'
+
 
     ];
 }

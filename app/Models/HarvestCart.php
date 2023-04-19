@@ -9,6 +9,7 @@ class HarvestCart extends Model
 {
     use HasFactory;
     protected $table = 'add';
+    public $incrementing = false;
 
    protected $fillable = [
 

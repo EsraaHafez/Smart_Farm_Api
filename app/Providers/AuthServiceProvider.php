@@ -44,7 +44,7 @@ class AuthServiceProvider extends ServiceProvider
 
 
         Passport::tokensCan([
-            'actors' => 'Actor',
+            'Actor' => 'Actor',
 
         ]);
     }

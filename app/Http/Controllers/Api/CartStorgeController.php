@@ -73,7 +73,7 @@ class CartStorgeController extends Basecontroller
      {
         $input = $request->all() ;
         $validator = Validator::make($input , [
-            'id'   => 'required',
+
             'Cart_id'   => 'required',
             'Storge_id'   => 'required',
 
@@ -93,7 +93,7 @@ class CartStorgeController extends Basecontroller
         } */
 
          // first Crops_Name from database and second from user.
-         $CartStorge->id = $input['id'];
+
 
         $CartStorge->Cart_id = $input['Cart_id'];
         $CartStorge->Storge_id = $input['Storge_id'];

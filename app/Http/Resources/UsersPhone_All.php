@@ -3,9 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Auth;
-
-class Users_Phone extends JsonResource
+use auth;
+class UsersPhone_All extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,9 +17,9 @@ class Users_Phone extends JsonResource
         //return parent::toArray($request);
         return [
 
-            'user_'.'id' => Auth::User()->id  ,
-            //'user_'.'id' => $this->id,
-           // 'Phone' => $this->Phone
+            //'user_'.'id' => Auth::User()->id  ,
+             'user_'.'id' => $this->id,
+             'Phone' => $this->Phone
 
 
 

@@ -39,7 +39,27 @@ return [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
+         ],
+
+         'api' => [
+            'driver' => 'passport',
+            'provider' => 'users',
+            'hash' => false,
         ],
+
+        'Actor' => [
+            'driver' => 'session',
+            'provider' => 'Actors',
+        ],
+
+        'Actortapi' => [
+            'driver' => 'passport',
+             'provider' => 'Actors',
+             'hash' => false,
+
+          ],
+
+
 
  /*        'api' => [
             'driver' => 'token',
@@ -49,18 +69,12 @@ return [
  */
 
 
-         'api' => [
-            'driver' => 'passport',
-            'provider' => 'users',
-            'hash' => false,
-        ],
-
-        'Actor' => [
+ /*        'Actor' => [
             'driver' => 'passport',
             'provider' => 'actors',
             'hash' => false,
         ],
-
+ */
  /*            'api' => [
                'driver' => 'jwt',
                'provider' => 'users',
@@ -90,7 +104,7 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-        'actors' => [
+        'Actors' => [
             'driver' => 'eloquent',
             'model' => App\Models\Actor::class,
         ],
@@ -123,8 +137,9 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
-        'actors' => [
-            'provider' => 'actors',
+
+        'Actors' => [
+            'provider' => 'Actors',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,

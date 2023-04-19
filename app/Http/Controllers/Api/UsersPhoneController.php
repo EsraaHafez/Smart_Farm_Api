@@ -7,24 +7,41 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Api\Basecontroller as Basecontroller;
 use Validator;
 use App\Http\Resources\Users_Phone as  Users_PhoneResource;
+use App\Http\Resources\User_Phone as  User_PhoneResource;
+use App\Http\Resources\UsersPhone_All as  UsersPhone_AllResource;
+
 use Auth;
 use App\Models\User;
 
 class UsersPhoneController extends Basecontroller
 {
+
+    public function userPhone()
+    {
+
+
+        //$Order = Order::all();
+        $Users_Phone = Users_Phone::where('id' , Auth::id())->get();
+        return $this->sendResponse(User_PhoneResource::collection($Users_Phone) , 'All Users_Phone sent');
+
+    }
+
+
+
     public function index()
     {
-        //$Users_Phone =  Users_Phone::all();
-        $Users_Phone = Users_Phone::orderBy('created_at' , 'DESC')->get();
-        return $this->sendResponse(Users_PhoneResource::collection($Users_Phone) , 'All Users_Phone sent');
+         $Users_Phone =  Users_Phone::all();
+        //$Users_Phone = Users_Phone::orderBy('created_at' , 'DESC')->get();
+        return $this->sendResponse(UsersPhone_AllResource::collection($Users_Phone) , 'All Users_Phone sent');
 
     }
 
 
      public function user($id)
     {
-        $Users_Phone = User::findOrFail('id' , Auth::User()->id);
-        return $this->sendResponse(Users_PhoneResource::collection($Users_Phone) , 'All Users_Phone sent');
+       // $Users_Phone = User::findOrFail('id' , Auth::User()->id);
+       $Users_Phone = Users_Phone::where('id' , $id)->get();
+        return $this->sendResponse(UsersPhone_AllResource::collection($Users_Phone) , 'All Users_Phone sent');
 
     }
 
@@ -47,65 +64,68 @@ class UsersPhoneController extends Basecontroller
         }
 
           $Users_Phone = Users_Phone::create($input);
-          return $this->sendResponse(new Users_PhoneResource($Users_Phone), 'Users_Phone create  successfully');
+          return $this->sendResponse(new User_PhoneResource($Users_Phone), 'Users_Phone create  successfully');
     }
 
 
 
-      public function show($id)
+       /* public function show($Phone)
     {
         //$Users_Phone = Users_Phone::find($phone_users_id);
         //$Users_Phone->id = $Users_Phone->User->id;
-        $Users_Phone = auth()->User();
-         if(is_null($Users_Phone)){
+        //$id = Users_Phone::all();
+        $Phone = Users_Phone::find($Phone)->all();
+        if(is_null($Phone)){
 
-            return $this->sendError('Users_Phone Not Found');
-
-        }
-        return $this->sendResponse(new Users_PhoneResource($Users_Phone), 'Users_Phone Found  successfully');
-
-    }
-
-
-    public function update(Request $request,  Users_Phone $Phone)
-     {
-        $input = $request->all() ;
-        $input['id'] =  Auth::User()->id;
-        $validator = Validator::make($input , [
-
-           'id'   => 'required',
-            'Phone'   => 'required',
-
-
-        ]) ;
-
-        if($validator->fails()){
-
-            return $this->sendError('please validate error' , $validator->errors());
+            return $this->sendError('Actors_Phone Not Found');
 
         }
-         // first Crops_Name from database and second from user.
-        $Phone->id = $input['id'];
-        $Phone->Phone = $input['Phone'];
+        return $this->sendResponse(new UsersPhone_AllResource($Phone), 'Users_Phone Found  successfully');
 
-        $Phone->save();
-         return $this->sendResponse(new Users_PhoneResource($Phone), 'Users_Phone update  successfully');
+    } */
 
-    }
+/*
 
-
-    public function destroy( Users_Phone $Phone)
+    public function update( Request $request)
     {
-      /*       $errorMessage = [] ;
+        $Users_Phone = Users_Phone::first(); //missed line
+        $Users_Phone->id = Auth::User()->id;
+        $Users_Phone->Phone = $request['Phone'];
 
-            if($crop->user_id != Auth::id()){
+        $Users_Phone->save();
 
-            return $this->sendError('you dont have rights' , $errorMessage);
+        return $this->sendResponse(new Users_PhoneResource($Users_Phone), 'Users_Phone update  successfully');
+    }
+ */
 
-        } */
 
-        $Phone->delete($Phone);
-        return $this->sendResponse(new Users_PhoneResource($Phone, 'Phone'), 'Users_Phones deleted  successfully');
+
+
+    public function updatephone(Request $request,$Phone)
+
+    {
+        /*  $errorMessage = [] ;
+         if($Phone->id != Auth::id()){
+
+        return $this->sendError('you dont have rights' , $errorMessage);
+
+    } */
+        $Phone = Users_Phone::where('Phone', $Phone)->update($request->all());
+        //return $this->sendResponse(new Users_PhoneResource($Phone),'Users_Phone update  successfully');
+        return 'your Phone update  successfully';
+    }
+
+
+
+
+
+
+    public function delete( $Phone)
+    {
+
+        $Phone = Users_Phone::where('Phone', $Phone)->delete();
+        //return $this->sendResponse(new Users_PhoneResource($Phone),'Users_Phone delete  successfully');
+        return 'Your Phone delete  Successfully';
 
     }
 }

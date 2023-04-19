@@ -49,7 +49,7 @@ class HarvestController extends Basecontroller
         $Harvest = Harvest::find($Harvest_id);
         if(is_null($Harvest)){
 
-            return $this->sendError('Disease Not Found');
+            return $this->sendError('Harvest Not Found');
 
         }
         return $this->sendResponse(new HarvestResource($Harvest), 'Harvest Found  successfully');

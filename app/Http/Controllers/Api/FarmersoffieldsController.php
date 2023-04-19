@@ -61,7 +61,7 @@ class FarmersoffieldsController extends Basecontroller
         $Farmersoffields = Farmersoffields::find($id);
         if(is_null($Farmersoffields)){
 
-            return $this->sendError('Farmer Not Found');
+            return $this->sendError('Farmersoffield Not Found');
 
         }
         return $this->sendResponse(new FarmersoffieldsResource($Farmersoffields), 'Farmersoffields Found  successfully');
@@ -69,11 +69,11 @@ class FarmersoffieldsController extends Basecontroller
     }
 
 
-    public function update(Request $request, Farmersoffields $Farmersoffields)
+    public function update(Request $request, Farmersoffields $Farmersoffield)
      {
         $input = $request->all() ;
         $validator = Validator::make($input , [
-            'id'   => 'required',
+
             'Field_id'   => 'required',
             'Farmer_id'   => 'required',
 
@@ -93,16 +93,15 @@ class FarmersoffieldsController extends Basecontroller
         } */
 
          // first Crops_Name from database and second from user.
-         $Farmersoffields->id = $input['id'];
 
-        $Farmersoffields->Field_id = $input['Field_id'];
-        $Farmersoffields->Farmer_id = $input['Farmer_id'];
-
+        $Farmersoffield->Field_id = $input['Field_id'];
+        $Farmersoffield->Farmer_id = $input['Farmer_id'];
 
 
 
-        $Farmersoffields->save();
-         return $this->sendResponse(new FarmersoffieldsResource($Farmersoffields), 'Farmersoffields update  successfully');
+
+        $Farmersoffield->save();
+         return $this->sendResponse(new FarmersoffieldsResource($Farmersoffield), 'Farmersoffields update  successfully');
 
     }
 

@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Api\Basecontroller as Basecontroller;
 use Validator;
 use App\Http\Resources\StorageofClient as StorageofClientsResource;
+use Auth;
+use App\Models\User;
+use App\Models\Storage;
 
 class StorageofClientController extends Basecontroller
 {
@@ -14,7 +17,7 @@ class StorageofClientController extends Basecontroller
 
     public function index()
     {
-        $StorageofClient = StorageofClient::orderBy('id' , 'asc')->get();
+        $StorageofClient = StorageofClient::all();
         return $this->sendResponse(StorageofClientsResource::collection($StorageofClient) , 'All StorageofClient sent');
 
     }
@@ -37,10 +40,11 @@ class StorageofClientController extends Basecontroller
     public function store(Request $request)
     {
         $input = $request->all() ;
+        $input['id'] =  Auth::User()->id;
         $validator = Validator::make($input , [
 
-            'Buys_id'   => 'required',
-            'id'   => 'required',
+
+            //'id'   => 'required',
             'Storge_id'   => 'required',
 
 
@@ -57,8 +61,20 @@ class StorageofClientController extends Basecontroller
     }
 
 
+    public function show($Storge_id)
+    {
 
-     public function show($id)
+        $StorageofClient = StorageofClient::where('Storge_id' , $Storge_id)->where('id',Auth::id())->first();
+        if(is_null($StorageofClient)){
+
+            return $this->sendError('StorageofClients Not Found');
+
+        }
+        return $this->sendResponse(new StorageofClientsResource($StorageofClient), 'StorageofClient Found  successfully');
+
+    }
+
+    /*  public function show($id)
     {
         $StorageofClient = StorageofClient::find($id);
         if(is_null($StorageofClient)){
@@ -68,16 +84,16 @@ class StorageofClientController extends Basecontroller
         }
         return $this->sendResponse(new StorageofClientsResource($StorageofClient), 'StorageofClient Found  successfully');
 
-    }
+    } */
 
-
-    public function update(Request $request, StorageofClient $StorageofClient)
+    public function update(Request $request, StorageofClient $StorageofClient )
      {
         $input = $request->all() ;
+        $input['id'] =  Auth::User()->id;
         $validator = Validator::make($input , [
-            'Client_id'   => 'required',
+            //'Client_id'   => 'required',
             'Storge_id'   => 'required',
-
+            'id'   => 'required'
 
 
         ]) ;
@@ -95,7 +111,7 @@ class StorageofClientController extends Basecontroller
         } */
 
          // first Crops_Name from database and second from user.
-        $StorageofClient->Client_id = $input['Client_id'];
+         $StorageofClient->id = $input['id'];
         $StorageofClient->Storge_id = $input['Storge_id'];
 
 
@@ -106,17 +122,44 @@ class StorageofClientController extends Basecontroller
     }
 
 
-    public function destroy(StorageofClient $StorageofClients)
+
+    public function destroy(StorageofClient $Storge_id)
     {
-      /*       $errorMessage = [] ;
+        /*  $errorMessage = [] ;
 
             if($crop->user_id != Auth::id()){
 
             return $this->sendError('you dont have rights' , $errorMessage);
 
         } */
-        $StorageofClients->delete();
-        return $this->sendResponse(new StorageofClientsResource($StorageofClients), 'StorageofClient deleted  successfully');
+
+
+        $Storge_id->delete();
+
+
+        return $this->sendResponse(new StorageofClientsResource($Storge_id), 'Storage deleted  successfully');
 
     }
+
+
+
+    /* public function destroy($Storge_id)
+    {
+        $res = StorageofClient::destroy($Storge_id);
+        if ($res) {
+            return response()->json([
+                'status' => 1,
+                'msg' => 'success'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 0,
+                'msg' => 'fail'
+            ]);
+        }
+    } */
+
+
+
+
 }

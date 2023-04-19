@@ -60,7 +60,7 @@ class HarvestofCropsController extends Basecontroller
         $HarvestofCrops = HarvestofCrops::find($id);
         if(is_null($HarvestofCrops)){
 
-            return $this->sendError('Disease Not Found');
+            return $this->sendError('HarvestofCrops Not Found');
 
         }
         return $this->sendResponse(new HarvestofCropsResource($HarvestofCrops), 'StorageHarvest Found  successfully');

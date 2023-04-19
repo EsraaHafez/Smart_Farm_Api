@@ -9,6 +9,7 @@ class CartStorge extends Model
 {
     protected $table = 'contain2';
     //protected $primaryKey = 'Disease_id';
+    public $incrementing = false;
 
     use HasFactory;
 

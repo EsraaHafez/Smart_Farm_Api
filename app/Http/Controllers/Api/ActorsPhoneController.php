@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Api\Basecontroller as Basecontroller;
 use Validator;
 use App\Http\Resources\Actors_Phone as   Actors_PhoneResource;
-
+use Auth;
+use App\Models\Actor;
 class ActorsPhoneController extends Basecontroller
 {
     public function index()
@@ -28,13 +29,14 @@ class ActorsPhoneController extends Basecontroller
     public function store(Request $request)
     {
         $input = $request->all() ;
+        $input['Actor_Name'] =  Auth::Actor()->Actor_Name;
         $validator = Validator::make($input , [
             'id'   => 'required',
-            'Actor_Name'   => 'required',
+           // 'Actor_Name'   => 'required',
             'Phone'   => 'required',
 
         ]) ;
-
+        //"Actor_Name": "emantaha" ,
         if($validator->fails()){
 
             return $this->sendError('please validate error' , $validator->errors());

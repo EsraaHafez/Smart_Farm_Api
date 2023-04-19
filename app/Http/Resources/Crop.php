@@ -15,8 +15,7 @@ class Crop extends JsonResource
     public function toArray($request)
     {
         // return parent::toArray($request);
-        return [
-
+         return [
             'Crops_Name' => $this->Crops_Name,
             'Life_Cycle' => $this->Life_Cycle,
             'Temp' => $this->Temp,

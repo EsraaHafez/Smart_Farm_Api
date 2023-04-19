@@ -9,6 +9,7 @@ class HarvestofCrops extends Model
 {
     use HasFactory;
     protected $table = 'grow';
+    public $incrementing = false;
 
    protected $fillable = [
 

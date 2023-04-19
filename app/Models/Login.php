@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class StorageHarvest extends Model
+class Login extends Model
 {
     use HasFactory;
-    protected $table = 'contain';
-    public $incrementing = false;
 
+    protected $table = 'login';
 
     protected $fillable = [
-        'id',
-        'Harvest_id',
-        'Storge_id'
-
+        'Name',
+        'Password',
+        //'Actor_Name ',
+         'id',
     ];
+
 }

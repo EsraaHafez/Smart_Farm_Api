@@ -9,7 +9,7 @@ class Actors_Phone extends Model
 {
     use HasFactory;
     protected $table = 'phone_actor';
-
+    public $incrementing = false;
 
     protected $fillable = [
         'id' ,

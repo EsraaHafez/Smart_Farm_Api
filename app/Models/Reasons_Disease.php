@@ -9,7 +9,7 @@ class Reasons_Disease extends Model
 {
     use HasFactory;
     protected $table = 'reasons';
-
+    public $incrementing = false;
 
     protected $fillable = [
         'id' ,

@@ -7,16 +7,27 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Api\Basecontroller as Basecontroller;
 use Validator;
 use App\Http\Resources\Order as OrderResource;
-
+use Auth;
 
 class OrderController extends Basecontroller
 {
-    public function index()
+    public function userOwn()
+    {
+
+
+        //$Order = Order::all();
+        $Order = Order::where('id' , Auth::id())->get();
+        return $this->sendResponse(OrderResource::collection($Order) , 'All Order sent');
+
+    }
+
+    public function AllOrder()
     {
         $Order = Order::all();
         return $this->sendResponse(OrderResource::collection($Order) , 'All Order sent');
 
     }
+
 
     public function user($id)
     {
@@ -36,8 +47,9 @@ class OrderController extends Basecontroller
     public function store(Request $request)
     {
         $input = $request->all() ;
+        $input['id'] =  Auth::User()->id;
         $validator = Validator::make($input , [
-            'Date'   => 'required|date',
+            //'Date'   => 'required|date',
             'Quantity'   => 'required',
             'Total_Price'   => 'required',
             'id'   => 'required',
@@ -58,7 +70,7 @@ class OrderController extends Basecontroller
 
 
 
-    public function show($order_id)
+      public function showorder($order_id)
     {
         $Order = Order::find($order_id);
         if(is_null($Order)){
@@ -74,6 +86,7 @@ class OrderController extends Basecontroller
     public function update(Request $request, Order $Order)
      {
         $input = $request->all() ;
+        $input['id'] =  Auth::User()->id;
         $validator = Validator::make($input , [
 
             'Quantity'   => 'required',
@@ -90,11 +103,11 @@ class OrderController extends Basecontroller
 
         }
 
-       /*  if($crop->user_id != Auth::id()){
+         if($Order->id != Auth::id()){
 
             return $this->sendError('you dont have rights' , $validator->errors());
 
-        } */
+        }
 
          // first Crops_Name from database and second from user.
 
@@ -113,13 +126,13 @@ class OrderController extends Basecontroller
 
     public function destroy(Order $Order)
     {
-      /*       $errorMessage = [] ;
+         $errorMessage = [] ;
 
-            if($crop->user_id != Auth::id()){
+            if($Order->id != Auth::id()){
 
             return $this->sendError('you dont have rights' , $errorMessage);
 
-        } */
+        }
         $Order->delete();
         return $this->sendResponse(new OrderResource($Order), 'Order deleted  successfully');
 

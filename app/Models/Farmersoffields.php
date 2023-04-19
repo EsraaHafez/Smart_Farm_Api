@@ -9,7 +9,8 @@ class Farmersoffields extends Model
 {
     use HasFactory;
     protected $table = 'work';
-   // protected $primaryKey = 'Farmer_id';
+    public $incrementing = false;
+
 
 
     protected $fillable = [
