@@ -119,4 +119,68 @@ class TypeTreatmentController extends Basecontroller
         return $this->sendResponse(new TypeTreatmentResource($TypeTreatment), 'TypeTreatment deleted  successfully');
 
     }
+
+    public function deletetype_treatment($Treatment_ID)
+    {
+      /*       $errorMessage = [] ;
+
+            if($crop->user_id != Auth::id()){
+
+            return $this->sendError('you dont have rights' , $errorMessage);
+
+        } */
+        if($TypeTreatment = TypeTreatment::find($Treatment_ID)){
+        $TypeTreatment->delete();
+        return $this->sendResponse(new TypeTreatmentResource($TypeTreatment), 'TypeTreatment deleted  successfully');
+    }
+    else{
+        return response()->json([
+            'status' => 0,
+            'msg' => 'fail'
+        ]);
+    }
+    }
+
+    public function updatetype_treatment(Request $request,   $Treatment_ID)
+    {
+        if($TypeTreatment = TypeTreatment::find($Treatment_ID)){
+       $input = $request->all() ;
+       $validator = Validator::make($input , [
+           'Name'   => 'required',
+           'Farmer_id'   => 'required',
+           'Disease_id'   => 'required',
+
+
+       ]) ;
+
+       if($validator->fails()){
+
+           return $this->sendError('please validate error' , $validator->errors());
+
+       }
+       /*  if($crop->user_id != Auth::id()){
+
+            return $this->sendError('you dont have rights' , $validator->errors());
+
+        } */
+
+         // first Crops_Name from database and second from user.
+         $TypeTreatment->Name = $input['Name'];
+         $TypeTreatment->Farmer_id = $input['Farmer_id'];
+         $TypeTreatment->Disease_id = $input['Disease_id'];
+
+
+
+         $TypeTreatment->save();
+          return $this->sendResponse(new TypeTreatmentResource($TypeTreatment), 'TypeTreatment update  successfully');
+    }
+    else{
+        return response()->json([
+            'status' => 0,
+            'msg' => 'fail'
+        ]);
+    }
+     }
+
+
 }

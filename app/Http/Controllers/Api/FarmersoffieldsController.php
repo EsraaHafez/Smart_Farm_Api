@@ -119,4 +119,66 @@ class FarmersoffieldsController extends Basecontroller
         return $this->sendResponse(new FarmersoffieldsResource($Farmersoffield), 'Farmersoffields deleted  successfully');
 
     }
+
+    public function deleteFarmersoffield($id)
+    {
+      /*       $errorMessage = [] ;
+
+            if($crop->user_id != Auth::id()){
+
+            return $this->sendError('you dont have rights' , $errorMessage);
+
+        } */
+        if($Farmersoffield = Farmersoffields::find($id)){
+        $Farmersoffield->delete();
+        return $this->sendResponse(new FarmersoffieldsResource($Farmersoffield), 'FarmersoffieldsResource deleted  successfully');
+    }
+    else{
+        return response()->json([
+            'status' => 0,
+            'msg' => 'fail'
+        ]);
+    }
+    }
+
+
+    public function updateFarmersoffield(Request $request,   $id)
+     {
+        if($Farmersoffield = Farmersoffields::find($id)){
+        $input = $request->all() ;
+        $validator = Validator::make($input , [
+
+            'Field_id'   => 'required',
+            'Farmer_id'   => 'required',
+
+
+        ]) ;
+
+        if($validator->fails()){
+
+            return $this->sendError('please validate error' , $validator->errors());
+
+        }
+
+       /*  if($crop->user_id != Auth::id()){
+
+            return $this->sendError('you dont have rights' , $validator->errors());
+
+        } */
+
+        // first Crops_Name from database and second from user.
+        $Farmersoffield->Field_id = $input['Field_id'];
+        $Farmersoffield->Farmer_id = $input['Farmer_id'];
+
+
+        $Farmersoffield->save();
+         return $this->sendResponse(new FarmersoffieldsResource($Farmersoffield), 'Farmersoffields update  successfully');
+    }
+    else{
+        return response()->json([
+            'status' => 0,
+            'msg' => 'fail'
+        ]);
+    }
+    }
 }

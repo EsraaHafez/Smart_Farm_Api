@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use Auth;
 class Cart extends JsonResource
 {
     /**
@@ -18,14 +18,16 @@ class Cart extends JsonResource
         return [
             'Cart_id' => $this->Cart_id ,
             'Name' => $this->Name,
-            'Image' => $this->Image,
+            //'Image' => $this->Image,
+            'Image'  => (asset('Carts/'.$this->Image)),
             'Quantity' => $this->Quantity,
-            'Price'=> $this->Price,
-            'user_'.'id'=> $this->id,
-
+            'Total_Price'=> $this->Price,
+           // 'user_'.'id'=> $this->id,
+            'user_'.'id'=> Auth::User()->id,
 
 
 
         ];
     }
 }
+ 

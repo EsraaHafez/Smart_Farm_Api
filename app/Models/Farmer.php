@@ -15,10 +15,11 @@ class Farmer extends Model
     protected $fillable = [
         'firstname',
         'lastname',
-        'email',
+        'Gender',
+        'Mobile',
         'Address',
         'Harvest_id',
-        'Actor_Name',
+        'id'
 
 
     ];

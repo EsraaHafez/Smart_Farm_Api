@@ -20,11 +20,14 @@ class Crop extends JsonResource
             'Life_Cycle' => $this->Life_Cycle,
             'Temp' => $this->Temp,
             'Fertilisers' => $this->Fertilisers,
-            'Price' => $this->Price,
+            'Water' => $this->Water,
             'Type'=> $this->Type,
-            'Image'=> $this->Image,
+            //'Image'=> $this->Image,
             'Field_id' => $this->Field_id,
             'Disease_id' => $this->Disease_id,
+            //'Image'  => asset('app/Crops/' . $this->Image)
+            'Image'  => (asset('Crops/'.$this->Image)),
+
 
 
 

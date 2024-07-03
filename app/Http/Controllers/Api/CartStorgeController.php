@@ -120,4 +120,70 @@ class CartStorgeController extends Basecontroller
         return $this->sendResponse(new CartStorgeResource($CartStorge), 'CartStorge deleted  successfully');
 
     }
+
+
+    public function deleteCartStorge($id)
+    {
+      /*       $errorMessage = [] ;
+
+            if($crop->user_id != Auth::id()){
+
+            return $this->sendError('you dont have rights' , $errorMessage);
+
+        } */
+        if($CartStorge = CartStorge::find($id)){
+        $CartStorge->delete();
+        return $this->sendResponse(new CartStorgeResource($CartStorge), 'CartStorge deleted  successfully');
+        }
+        else{
+            return response()->json([
+                'status' => 0,
+                'msg' => 'fail'
+            ]);
+        }
+    }
+
+    public function updateCartStorge(Request $request,   $id)
+    {
+       if($CartStorge = CartStorge::find($id)){
+       $input = $request->all() ;
+       $validator = Validator::make($input , [
+
+           'Cart_id'   => 'required',
+           'Storge_id'   => 'required',
+
+
+       ]) ;
+
+       if($validator->fails()){
+
+           return $this->sendError('please validate error' , $validator->errors());
+
+       }
+
+      /*  if($crop->user_id != Auth::id()){
+
+           return $this->sendError('you dont have rights' , $validator->errors());
+
+       } */
+
+        // first Crops_Name from database and second from user.
+
+
+        $CartStorge->Cart_id = $input['Cart_id'];
+        $CartStorge->Storge_id = $input['Storge_id'];
+
+
+
+
+        $CartStorge->save();
+         return $this->sendResponse(new CartStorgeResource($CartStorge), 'CartStorge update  successfully');
+    }
+    else{
+        return response()->json([
+            'status' => 0,
+            'msg' => 'fail'
+        ]);
+    }
+    }
 }

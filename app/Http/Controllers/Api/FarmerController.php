@@ -27,9 +27,9 @@ class FarmerController extends Basecontroller
 
     }
 
-    public function Actor($Actor_Name)
+    public function Actor($id)
     {
-        $Farmer = Farmer::where('Actor_Name' , $Actor_Name)->get();
+        $Farmer = Farmer::where('id' , $id)->get();
         return $this->sendResponse(FarmerResource::collection($Farmer) , 'All Farmer sent');
 
     }
@@ -38,13 +38,15 @@ class FarmerController extends Basecontroller
     public function store(Request $request)
     {
         $input = $request->all() ;
+        $input['id'] =  Auth::User()->id;
         $validator = Validator::make($input , [
             'firstname'   => 'required',
             'lastname'   => 'required',
-            'email'   => 'required|email',
+            'Gender'   => 'required',
             'Address'   => 'required',
+            'Mobile'   =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:11',
             'Harvest_id'   => 'required',
-            'Actor_Name'   => 'required',
+            'id'   => 'required',
 
         ]) ;
 
@@ -60,9 +62,9 @@ class FarmerController extends Basecontroller
 
 
 
-    public function show($Treatment_ID)
+    public function show($Farmer_id)
     {
-        $Farmer = Farmer::find($Treatment_ID);
+        $Farmer = Farmer::find($Farmer_id);
         if(is_null($Farmer)){
 
             return $this->sendError('Farmer Not Found');
@@ -76,13 +78,15 @@ class FarmerController extends Basecontroller
     public function update(Request $request, Farmer $Farmer)
      {
         $input = $request->all() ;
+        $input['id'] =  Auth::User()->id;
         $validator = Validator::make($input , [
             'firstname'   => 'required',
             'lastname'   => 'required',
-            'email'   => 'required|email',
+            'Gender'   => 'required',
             'Address'   => 'required',
+            'Mobile'   =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:11',
             'Harvest_id'   => 'required',
-            'Actor_Name'   => 'required',
+            'id'   => 'required',
 
 
         ]) ;
@@ -102,10 +106,11 @@ class FarmerController extends Basecontroller
          // first Crops_Name from database and second from user.
         $Farmer->firstname = $input['firstname'];
         $Farmer->lastname = $input['lastname'];
-        $Farmer->email = $input['email'];
+        $Farmer->Gender = $input['Gender'];
+        $Farmer->Mobile = $input['Mobile'];
         $Farmer->Address = $input['Address'];
         $Farmer->Harvest_id = $input['Harvest_id'];
-        $Farmer->Actor_Name = $input['Actor_Name'];
+        $Farmer->id = $input['id'];
 
 
 
@@ -128,4 +133,76 @@ class FarmerController extends Basecontroller
         return $this->sendResponse(new FarmerResource($Farmer), 'Farmer deleted  successfully');
 
     }
+
+    public function deletefarmers($Farmer_id)
+    {
+      /*       $errorMessage = [] ;
+
+            if($crop->user_id != Auth::id()){
+
+            return $this->sendError('you dont have rights' , $errorMessage);
+
+        } */
+        if($Farmer = Farmer::find($Farmer_id)){
+        $Farmer->delete();
+        return $this->sendResponse(new FarmerResource($Farmer), 'Farmer deleted  successfully');
+    }
+    else{
+        return response()->json([
+            'status' => 0,
+            'msg' => 'fail'
+        ]);
+    }
+    }
+
+       public function updatefarmers(Request $request,   $Farmer_id)
+     {
+        if($Farmer = Farmer::find($Farmer_id)){
+        $input = $request->all() ;
+        $input['id'] =  Auth::User()->id;
+        $validator = Validator::make($input , [
+            'firstname'   => 'required',
+            'lastname'   => 'required',
+            'Gender'   => 'required',
+            'Mobile'   =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:11',
+            'Address'   => 'required',
+            'Harvest_id'   => 'required',
+            'id'   => 'required',
+
+
+        ]) ;
+
+        if($validator->fails()){
+
+            return $this->sendError('please validate error' , $validator->errors());
+
+        }
+    /*  if($crop->user_id != Auth::id()){
+
+            return $this->sendError('you dont have rights' , $validator->errors());
+
+        } */
+
+         // first Crops_Name from database and second from user.
+         $Farmer->firstname = $input['firstname'];
+         $Farmer->lastname = $input['lastname'];
+         $Farmer->Gender = $input['Gender'];
+         $Farmer->Mobile = $input['Mobile'];
+         $Farmer->Address = $input['Address'];
+         $Farmer->Harvest_id = $input['Harvest_id'];
+         $Farmer->id = $input['id'];
+
+
+
+         $Farmer->save();
+          return $this->sendResponse(new FarmerResource($Farmer), 'Farmer update  successfully');
+        }
+
+        else{
+            return response()->json([
+                'status' => 0,
+                'msg' => 'fail'
+            ]);
+        }
+     }
 }

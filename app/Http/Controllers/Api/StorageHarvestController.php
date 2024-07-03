@@ -117,4 +117,64 @@ class StorageHarvestController extends Basecontroller
         return $this->sendResponse(new StorageHarvestResource($StorageHarvest), 'StorageHarvest deleted  successfully');
 
     }
+
+    public function deleteStorageHarvest($id)
+    {
+      /*       $errorMessage = [] ;
+
+            if($crop->user_id != Auth::id()){
+
+            return $this->sendError('you dont have rights' , $errorMessage);
+
+        } */
+        if($StorageHarvest = StorageHarvest::find($id)){
+        $StorageHarvest->delete();
+        return $this->sendResponse(new StorageHarvestResource($StorageHarvest), 'StorageHarvest deleted  successfully');
+        }
+        else{
+            return response()->json([
+                'status' => 0,
+                'msg' => 'fail'
+            ]);
+        }
+    }
+
+    public function updateStorageHarvest(Request $request,   $id)
+    {
+       if($StorageHarvest = StorageHarvest::find($id)){
+       $input = $request->all() ;
+       $validator = Validator::make($input , [
+           //'id'   => 'required',
+           'Harvest_id'   => 'required',
+           'Storge_id'   => 'required',
+
+
+       ]) ;
+
+       if($validator->fails()){
+
+           return $this->sendError('please validate error' , $validator->errors());
+
+       }
+      /*  if($crop->user_id != Auth::id()){
+
+            return $this->sendError('you dont have rights' , $validator->errors());
+
+        } */
+
+         // first Crops_Name from database and second from user.
+         $StorageHarvest->Harvest_id = $input['Harvest_id'];
+         $StorageHarvest->Storge_id = $input['Storge_id'];
+
+
+         $StorageHarvest->save();
+          return $this->sendResponse(new StorageHarvestResource($StorageHarvest), 'StorageHarvest update  successfully');
+    }
+    else{
+        return response()->json([
+            'status' => 0,
+            'msg' => 'fail'
+        ]);
+    }
+     }
 }

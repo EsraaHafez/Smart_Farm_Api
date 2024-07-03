@@ -13,7 +13,7 @@ class OrderController extends Basecontroller
 {
     public function userOwn()
     {
-
+ 
 
         //$Order = Order::all();
         $Order = Order::where('id' , Auth::id())->get();
@@ -51,7 +51,7 @@ class OrderController extends Basecontroller
         $validator = Validator::make($input , [
             //'Date'   => 'required|date',
             'Quantity'   => 'required',
-            'Total_Price'   => 'required',
+            //'Total_Price'   => 'required',
             'id'   => 'required',
             'Cart_id'   => 'required'
 
@@ -90,7 +90,7 @@ class OrderController extends Basecontroller
         $validator = Validator::make($input , [
 
             'Quantity'   => 'required',
-            'Total_Price'   => 'required',
+            //'Total_Price'   => 'required',
             'id'   => 'required',
             'Cart_id'   => 'required'
 
@@ -112,7 +112,7 @@ class OrderController extends Basecontroller
          // first Crops_Name from database and second from user.
 
         $Order->Quantity = $input['Quantity'];
-        $Order->Total_Price = $input['Total_Price'];
+        //$Order->Total_Price = $input['Total_Price'];
         $Order->id = $input['id'];
         $Order->Cart_id = $input['Cart_id'];
 
@@ -137,4 +137,72 @@ class OrderController extends Basecontroller
         return $this->sendResponse(new OrderResource($Order), 'Order deleted  successfully');
 
     }
+
+    public function deleteOrder($order_id)
+    {
+      /*       $errorMessage = [] ;
+
+            if($crop->user_id != Auth::id()){
+
+            return $this->sendError('you dont have rights' , $errorMessage);
+
+        } */
+        if($Order = Order::find($order_id)){
+        $Order->delete();
+        return $this->sendResponse(new OrderResource($Order), 'Order deleted  successfully');
+    }
+    else{
+        return response()->json([
+            'status' => 0,
+            'msg' => 'fail'
+        ]);
+    }
+    }
+
+    public function updateOrder(Request $request, $order_id)
+    {
+       if($Order = Order::find($order_id)){
+       $input = $request->all() ;
+       $input['id'] =  Auth::User()->id;
+       $validator = Validator::make($input , [
+
+           'Quantity'   => 'required',
+           //'Total_Price'   => 'required',
+           'id'   => 'required',
+           'Cart_id'   => 'required'
+
+
+       ]) ;
+
+       if($validator->fails()){
+
+           return $this->sendError('please validate error' , $validator->errors());
+
+       }
+
+        if($Order->id != Auth::id()){
+
+           return $this->sendError('you dont have rights' , $validator->errors());
+
+        }
+
+        // first Crops_Name from database and second from user.
+
+       $Order->Quantity = $input['Quantity'];
+       //$Order->Total_Price = $input['Total_Price'];
+       $Order->id = $input['id'];
+       $Order->Cart_id = $input['Cart_id'];
+
+
+
+       $Order->save();
+        return $this->sendResponse(new OrderResource($Order), 'Order update  successfully');
+    }
+    else{
+        return response()->json([
+            'status' => 0,
+            'msg' => 'fail'
+        ]);
+    }
+   }
 }

@@ -18,11 +18,11 @@ class Login extends JsonResource
         //return parent::toArray($request);
         return [
 
-            'Login_id' => $this->Login_id   ,
+            //'Login_id' => $this->Login_id   ,
             'Name' => $this->Name,
             'Password' => $this->Password ,
             //'Actor_Name' => $this->Actor_Name ,
-            'id' => Auth::User()->id   ,
+            //'id' =>  $this->id
 
 
 

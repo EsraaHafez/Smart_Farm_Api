@@ -10,12 +10,15 @@ class Login extends Model
     use HasFactory;
 
     protected $table = 'login';
+    protected $primaryKey = 'Login_id';
+
+
 
     protected $fillable = [
         'Name',
         'Password',
         //'Actor_Name ',
-         'id',
+         //'id',
     ];
 
 }

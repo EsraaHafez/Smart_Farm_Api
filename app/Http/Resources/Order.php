@@ -15,13 +15,13 @@ class Order extends JsonResource
     public function toArray($request)
     {
        // return parent::toArray($request);
-
+ 
           return [
 
             'order_id' => $this->order_id  ,
             'created_at' => $this->created_at,
             'Quantity' => $this->Quantity ,
-            'Total_Price' => $this->Total_Price ,
+            //'Total_Price' => $this->Total_Price ,
             'user_'.'id' => $this->id,
             'Cart_id' => $this->Cart_id ,
 

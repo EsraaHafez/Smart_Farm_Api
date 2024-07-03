@@ -52,7 +52,7 @@ return [
             'provider' => 'Actors',
         ],
 
-        'Actortapi' => [
+        'Actorapi' => [
             'driver' => 'passport',
              'provider' => 'Actors',
              'hash' => false,

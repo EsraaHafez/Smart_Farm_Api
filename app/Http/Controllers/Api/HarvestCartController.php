@@ -115,4 +115,69 @@ class HarvestCartController extends Basecontroller
         return $this->sendResponse(new HarvestCartResource($HarvestCart), 'HarvestCart deleted  successfully');
 
     }
+
+
+    public function deleteHarvestCart($id)
+    {
+      /*       $errorMessage = [] ;
+
+            if($crop->user_id != Auth::id()){
+
+            return $this->sendError('you dont have rights' , $errorMessage);
+
+        } */
+        if($HarvestCart = HarvestCart::find($id)){
+        $HarvestCart->delete();
+        return $this->sendResponse(new HarvestCartResource($HarvestCart), 'HarvestCart deleted  successfully');
+        }
+
+        else{
+            return response()->json([
+                'status' => 0,
+                'msg' => 'fail'
+            ]);
+        }
+    }
+
+    public function updateHarvestCart(Request $request,   $id)
+     {
+        if($HarvestCart = HarvestCart::find($id)){
+        $input = $request->all() ;
+        $validator = Validator::make($input , [
+            'Harvest_id'   => 'required',
+            'Cart_id'   => 'required'
+
+
+        ]) ;
+
+        if($validator->fails()){
+
+            return $this->sendError('please validate error' , $validator->errors());
+
+        }
+
+       /*  if($crop->user_id != Auth::id()){
+
+            return $this->sendError('you dont have rights' , $validator->errors());
+
+        } */
+
+          // first Crops_Name from database and second from user.
+          $HarvestCart->Harvest_id = $input['Harvest_id'];
+          $HarvestCart->Cart_id = $input['Cart_id'];
+
+
+          $HarvestCart->save();
+           return $this->sendResponse(new HarvestCartResource($HarvestCart), 'HarvestCart update  successfully');
+
+      }
+
+
+    else{
+        return response()->json([
+            'status' => 0,
+            'msg' => 'fail'
+        ]);
+    }
+}
 }

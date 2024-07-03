@@ -9,6 +9,7 @@ use Validator;
 use App\Http\Resources\Actors_Phone as   Actors_PhoneResource;
 use Auth;
 use App\Models\Actor;
+
 class ActorsPhoneController extends Basecontroller
 {
     public function index()
@@ -29,11 +30,13 @@ class ActorsPhoneController extends Basecontroller
     public function store(Request $request)
     {
         $input = $request->all() ;
-        $input['Actor_Name'] =  Auth::Actor()->Actor_Name;
+        //$input['Actor_Name'] =  Auth::Actorapi()->Actor_Name;
         $validator = Validator::make($input , [
             'id'   => 'required',
-           // 'Actor_Name'   => 'required',
-            'Phone'   => 'required',
+           'Actor_Name'   => 'required',
+            //'Phone'   => 'required',
+            'Phone'   =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:11',
+
 
         ]) ;
         //"Actor_Name": "emantaha" ,
@@ -111,4 +114,64 @@ class ActorsPhoneController extends Basecontroller
         return $this->sendResponse(new Actors_PhoneResource($Actors_Phone), 'Actors_Phone deleted  successfully');
 
     }
+
+    public function deleteActors_Phone($id)
+    {
+      /*       $errorMessage = [] ;
+
+            if($crop->user_id != Auth::id()){
+
+            return $this->sendError('you dont have rights' , $errorMessage);
+
+        } */
+        if($Actors_Phone = Actors_Phone::find($id)){
+        $Actors_Phone->delete();
+        return $this->sendResponse(new Actors_PhoneResource($Actors_Phone), 'Actors_Phone deleted  successfully');
+        }
+        else{
+            return response()->json([
+                'status' => 0,
+                'msg' => 'fail'
+            ]);
+        }
+    }
+
+    public function updateActors_Phone(Request $request,   $id)
+    {
+        if($Actors_Phone = Actors_Phone::find($id)){
+       $input = $request->all() ;
+       $validator = Validator::make($input , [
+
+           'Actor_Name'   => 'required',
+           'Phone'   => 'required',
+
+
+       ]) ;
+
+       if($validator->fails()){
+
+           return $this->sendError('please validate error' , $validator->errors());
+
+       }
+
+      /*  if($crop->user_id != Auth::id()){
+
+           return $this->sendError('you dont have rights' , $validator->errors());
+
+       } */
+
+        // first Crops_Name from database and second from user.
+       $Actors_Phone->Actor_Name = $input['Actor_Name'];
+       $Actors_Phone->Phone = $input['Phone'];
+
+       $Actors_Phone->save();
+       return $this->sendResponse(new Actors_PhoneResource($Actors_Phone), 'Actors_Phone update  successfully');
+    }
+    else{
+        return response()->json([
+            'status' => 0,
+            'msg' => 'fail'
+        ]);
+    }
+  }
 }

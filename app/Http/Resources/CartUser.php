@@ -21,9 +21,11 @@ class CartUser extends JsonResource
 
             'Name' => $this->Name,
             'Quantity' => $this->Quantity,
-            'Image' => $this->Image,
-            'Price'=> $this->Price,
-            //'user_'.'id'=> Auth::User()->id ,
+            //'Image' => $this->Image,
+            //'Image'  => asset('storage/app/' . $this->Image),
+            'Image'  => (asset('Carts/'.$this->Image)),
+            'Total_Price'=> $this->Total_Price,
+            'user_'.'id'=> $this->id,
         ];
     }
 }

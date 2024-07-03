@@ -52,6 +52,45 @@ class DiseaseController extends Basecontroller
 
     }
 
+    public function updateDisease(Request $request,   $Disease_id)
+     {
+        if($Disease = Disease::find($Disease_id)){
+        $input = $request->all() ;
+        $validator = Validator::make($input , [
+
+
+            'Name'   => 'required'
+
+
+        ]) ;
+
+        if($validator->fails()){
+
+            return $this->sendError('please validate error' , $validator->errors());
+
+        }
+
+       /*  if($crop->user_id != Auth::id()){
+
+            return $this->sendError('you dont have rights' , $validator->errors());
+
+        } */
+
+         // first Crops_Name from database and second from user.
+         $Disease->Name = $input['Name'];
+
+         $Disease->save();
+          return $this->sendResponse(new DiseaseResource($Disease), 'Disease update  successfully');
+
+    }
+    else{
+        return response()->json([
+            'status' => 0,
+            'msg' => 'fail'
+        ]);
+    }
+     }
+
 
     public function update(Request $request, Disease $Disease)
      {
@@ -95,7 +134,30 @@ class DiseaseController extends Basecontroller
 
         } */
         $Disease->delete();
-        return $this->sendResponse(new DiseaseResource($Disease), 'field deleted  successfully');
+        return $this->sendResponse(new DiseaseResource($Disease), 'Disease deleted  successfully');
 
     }
+
+    public function deleteDisease($Disease_id)
+    {
+      /*       $errorMessage = [] ;
+
+            if($crop->user_id != Auth::id()){
+
+            return $this->sendError('you dont have rights' , $errorMessage);
+
+        } */
+        if($Disease = Disease::find($Disease_id)){
+        $Disease->delete();
+        return $this->sendResponse(new DiseaseResource($Disease), 'Disease deleted  successfully');
+        }
+
+        else{
+            return response()->json([
+                'status' => 0,
+                'msg' => 'fail'
+            ]);
+        }
+    }
+
 }

@@ -21,10 +21,11 @@ class Farmer extends JsonResource
             'Farmer_id' => $this->Farmer_id   ,
             'firstname' => $this->firstname  ,
             'lastname' => $this->lastname,
-            'email' => $this->email  ,
+            'Gender' => $this->Gender  ,
+            'Mobile' => $this->Mobile  ,
             'Address' => $this->Address,
             'Harvest_id' => $this->Harvest_id   ,
-            'Actor_Name' => $this->Actor_Name
+            'id' => $this->id
 
 
         ];

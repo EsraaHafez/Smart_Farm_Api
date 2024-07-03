@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Harvest extends Model
 {
     use HasFactory;
-
+ 
     protected $table = 'harvest';
     protected $primaryKey = 'Harvest_id';
 
@@ -19,7 +19,9 @@ class Harvest extends Model
         'Price',
         'Price',
         'Type',
-        'Quantity'
+        'Quantity',
+        'Image',
+
 
 
     ];

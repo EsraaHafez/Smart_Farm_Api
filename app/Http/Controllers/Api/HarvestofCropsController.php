@@ -115,4 +115,68 @@ class HarvestofCropsController extends Basecontroller
         return $this->sendResponse(new HarvestofCropsResource($HarvestofCrop), 'HarvestofCrops deleted  successfully');
 
     }
+
+    public function deleteHarvestofCrops($id)
+    {
+      /*       $errorMessage = [] ;
+
+            if($crop->user_id != Auth::id()){
+
+            return $this->sendError('you dont have rights' , $errorMessage);
+
+        } */
+        if($HarvestofCrops = HarvestofCrops::find($id)){
+        $HarvestofCrops->delete();
+        return $this->sendResponse(new HarvestofCropsResource($HarvestofCrops), 'HarvestofCrops deleted  successfully');
+    }
+    else{
+        return response()->json([
+            'status' => 0,
+            'msg' => 'fail'
+        ]);
+    }
+    }
+
+
+    public function updateHarvestofCrops(Request $request, $id)
+     {
+        if($HarvestofCrop = HarvestofCrops::find($id)){
+        $input = $request->all() ;
+        $validator = Validator::make($input , [
+            'Harvest_id'   => 'required',
+            'Crops_Name'   => 'required'
+
+
+        ]) ;
+
+        if($validator->fails()){
+
+            return $this->sendError('please validate error' , $validator->errors());
+
+        }
+
+       /*  if($crop->user_id != Auth::id()){
+
+            return $this->sendError('you dont have rights' , $validator->errors());
+
+        } */
+
+         // first Crops_Name from database and second from user.
+         $HarvestofCrop->Harvest_id = $input['Harvest_id'];
+         $HarvestofCrop->Crops_Name = $input['Crops_Name'];
+
+
+         $HarvestofCrop->save();
+          return $this->sendResponse(new HarvestofCropsResource($HarvestofCrop), 'HarvestofCrops update  successfully');
+    }
+    else{
+        return response()->json([
+            'status' => 0,
+            'msg' => 'fail'
+        ]);
+    }
+     }
+
+
+
 }

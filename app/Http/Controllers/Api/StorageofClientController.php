@@ -22,6 +22,14 @@ class StorageofClientController extends Basecontroller
 
     }
 
+    public function Storageofuser()
+    {
+        //$Order = Order::all();
+        $StorageofClient = StorageofClient::where('id' , Auth::id())->get();
+        return $this->sendResponse(StorageofClientsResource::collection($StorageofClient) , 'All Storage sent');
+
+    }
+
     public function users($id)
     {
         $StorageofClient = StorageofClient::where('id' , $id)->get();
@@ -61,7 +69,7 @@ class StorageofClientController extends Basecontroller
     }
 
 
-    public function show($Storge_id)
+    /* public function show($Storge_id)
     {
 
         $StorageofClient = StorageofClient::where('Storge_id' , $Storge_id)->where('id',Auth::id())->first();
@@ -72,7 +80,7 @@ class StorageofClientController extends Basecontroller
         }
         return $this->sendResponse(new StorageofClientsResource($StorageofClient), 'StorageofClient Found  successfully');
 
-    }
+    } */
 
     /*  public function show($id)
     {
@@ -86,80 +94,56 @@ class StorageofClientController extends Basecontroller
 
     } */
 
-    public function update(Request $request, StorageofClient $StorageofClient )
-     {
-        $input = $request->all() ;
-        $input['id'] =  Auth::User()->id;
-        $validator = Validator::make($input , [
-            //'Client_id'   => 'required',
-            'Storge_id'   => 'required',
-            'id'   => 'required'
 
+public function updatestorage(Request $request,$Storge_id)
 
-        ]) ;
+{
+    /*  $errorMessage = [] ;
+     if($Phone->id != Auth::id()){
 
-        if($validator->fails()){
+    return $this->sendError('you dont have rights' , $errorMessage);
 
-            return $this->sendError('please validate error' , $validator->errors());
-
-        }
-
-       /*  if($crop->user_id != Auth::id()){
-
-            return $this->sendError('you dont have rights' , $validator->errors());
-
-        } */
-
-         // first Crops_Name from database and second from user.
-         $StorageofClient->id = $input['id'];
-        $StorageofClient->Storge_id = $input['Storge_id'];
-
-
-
-        $StorageofClient->save();
-         return $this->sendResponse(new StorageofClientsResource($StorageofClient), 'StorageofClient update  successfully');
+} */
+    if($Storge_id = StorageofClient::where('Storge_id', $Storge_id)->where('id' , Auth::id())->update($request->all()))
+    {
+    //return $this->sendResponse(new Users_PhoneResource($Phone),'Users_Phone update  successfully');
+    return response()->json([
+        'status' => 1,
+        'msg' => 'your Storge update  successfully'
+    ]);
 
     }
 
+    else{
+        return response()->json([
+            'status' => 0,
+            'msg' => 'fail'
+        ]);
+    }
+}
 
+public function delete( $StorageofClient)
+{
 
-    public function destroy(StorageofClient $Storge_id)
+    if($StorageofClient = StorageofClient::where('Storge_id', $StorageofClient)->where('id' , Auth::id())->delete())
     {
-        /*  $errorMessage = [] ;
+   /*    return $this->sendResponse(new StorageofClientsResource($StorageofClient)
+      , 'Your Storge delete  Successfully' ); */
 
-            if($crop->user_id != Auth::id()){
+      return response()->json([
+        'status' => 1,
+        'msg' => 'Your Storge delete  Successfully'
+    ]);
+}
 
-            return $this->sendError('you dont have rights' , $errorMessage);
-
-        } */
-
-
-        $Storge_id->delete();
-
-
-        return $this->sendResponse(new StorageofClientsResource($Storge_id), 'Storage deleted  successfully');
-
+    else{
+        return response()->json([
+            'status' => 0,
+            'msg' => 'fail'
+        ]);
     }
 
 
-
-    /* public function destroy($Storge_id)
-    {
-        $res = StorageofClient::destroy($Storge_id);
-        if ($res) {
-            return response()->json([
-                'status' => 1,
-                'msg' => 'success'
-            ]);
-        } else {
-            return response()->json([
-                'status' => 0,
-                'msg' => 'fail'
-            ]);
-        }
-    } */
-
-
-
+}
 
 }

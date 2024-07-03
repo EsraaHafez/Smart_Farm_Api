@@ -18,7 +18,7 @@ class Crop extends Model
         'Life_Cycle',
         'Temp',
         'Fertilisers',
-        'Price',
+        'Water',
         'Type',
         'Image',
         'Field_id',

@@ -17,9 +17,10 @@ class Cart extends Model
         'Name',
         'Image',
         'Quantity',
-        'Price',
+        'Total_Price',
         'id',
 
 
     ];
 }
+ 

@@ -60,7 +60,40 @@ class FieldController extends Basecontroller
 
     }
 
+    public function updatefields(Request $request,  $Field_id )
+    {
+        if($field = field::find($Field_id)){
+        $input = $request->all() ;
+        $validator = Validator::make($input , [
+            'Name'   => 'required',
+            'Last_Harvest_Date'  => 'required',
+            'Harvest_id' => 'required' ,
 
+        ]) ;
+        if($validator->fails()){
+
+            return $this->sendError('please validate error' , $validator->errors());
+
+        }
+
+        $field->Name = $input['Name'];
+        $field->Last_Harvest_Date = $input['Last_Harvest_Date'];
+        $field->Harvest_id  = $input['Harvest_id'];
+
+
+        $field->save();
+       return $this->sendResponse(new FieldResource($field), 'field update  successfully');
+    }
+
+    else{
+        return response()->json([
+            'status' => 0,
+            'msg' => 'fail'
+        ]);
+    }
+
+
+    }
 
     public function update(Request $request, field $field)
     {
@@ -107,6 +140,30 @@ class FieldController extends Basecontroller
         } */
         $field->delete();
         return $this->sendResponse(new FieldResource($field), 'field deleted  successfully');
+
+    }
+
+    public function deletefields($Field_id)
+    {
+      /*       $errorMessage = [] ;
+
+            if($crop->user_id != Auth::id()){
+
+            return $this->sendError('you dont have rights' , $errorMessage);
+
+        } */
+        if($field = field::find($Field_id)){
+        $field->delete();
+        return $this->sendResponse(new FieldResource($field), 'field deleted  successfully');
+
+    }
+
+        else{
+            return response()->json([
+                'status' => 0,
+                'msg' => 'fail'
+            ]);
+        }
 
     }
 }

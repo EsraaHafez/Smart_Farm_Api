@@ -70,4 +70,32 @@ return [
         public_path('storage') => storage_path('app/public'),
     ],
 
+
+
+
+    'Crops' => [
+        'driver' => 'local',
+        'root' => public_path('public/Crops'),
+        'url' => env('APP_URL').'/public',
+        'visibility' => 'public',
+        'throw' => false,
+    ],
+
+    'Harvest' => [
+        'driver' => 'local',
+        'root' => public_path('public/Harvest'),
+        'url' => env('APP_URL').'/public',
+        'visibility' => 'public',
+        'throw' => false,
+    ],
+
+    'Carts' => [
+        'driver' => 'local',
+        'root' => public_path('public/Carts'),
+        'url' => env('APP_URL').'/public',
+        'visibility' => 'public',
+        'throw' => false,
+    ],
+
+
 ];

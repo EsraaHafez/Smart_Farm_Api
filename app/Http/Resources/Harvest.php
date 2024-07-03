@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Harvest extends JsonResource
-{
+{ 
     /**
      * Transform the resource into an array.
      *
@@ -23,6 +23,7 @@ class Harvest extends JsonResource
             'Price' => $this->Price,
             'Type' => $this->Type  ,
             'Quantity' => $this->Quantity,
+            'Image'  => (asset('Harvest/'.$this->Image)),
 
 
 

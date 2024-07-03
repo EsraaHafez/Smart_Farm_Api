@@ -46,13 +46,14 @@ class UsersPhoneController extends Basecontroller
     }
 
 
-    public function store(Request $request)
+    public function sendPhone(Request $request)
     {
         $input = $request->all() ;
         $input['id'] =  Auth::User()->id;
         $validator = Validator::make($input , [
 
-            'Phone'   => 'required|unique:phone_users',
+            //'Phone'   => 'required|unique:phone_users',
+            'Phone'   =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:11',
 
 
         ]) ;
@@ -110,9 +111,21 @@ class UsersPhoneController extends Basecontroller
         return $this->sendError('you dont have rights' , $errorMessage);
 
     } */
-        $Phone = Users_Phone::where('Phone', $Phone)->update($request->all());
+        if($Phone = Users_Phone::where('Phone', $Phone)->where('id' , Auth::id())->update($request->all()))
+        {
         //return $this->sendResponse(new Users_PhoneResource($Phone),'Users_Phone update  successfully');
-        return 'your Phone update  successfully';
+        return response()->json([
+            'status' => 1,
+            'msg' => 'your Phone update  successfully'
+        ]);
+    }
+
+    else{
+        return response()->json([
+            'status' => 0,
+            'msg' => 'fail'
+        ]);
+    }
     }
 
 
@@ -123,9 +136,20 @@ class UsersPhoneController extends Basecontroller
     public function delete( $Phone)
     {
 
-        $Phone = Users_Phone::where('Phone', $Phone)->delete();
+        if($Phone = Users_Phone::where('Phone', $Phone)->where('id' , Auth::id())->delete())
+        {
         //return $this->sendResponse(new Users_PhoneResource($Phone),'Users_Phone delete  successfully');
-        return 'Your Phone delete  Successfully';
+        return response()->json([
+            'status' => 1,
+            'msg' => 'Your Phone delete  Successfully'
+        ]);
 
+        }
+        else{
+            return response()->json([
+                'status' => 0,
+                'msg' => 'fail'
+            ]);
+        }
     }
 }

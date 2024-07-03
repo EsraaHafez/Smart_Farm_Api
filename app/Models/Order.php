@@ -15,7 +15,7 @@ class Order extends Model
     protected $fillable = [
         //'Date',
         'Quantity',
-        'Total_Price',
+        //'Total_Price',
         'id',
         'Cart_id',
 
@@ -23,3 +23,4 @@ class Order extends Model
     ];
 
 }
+ 
